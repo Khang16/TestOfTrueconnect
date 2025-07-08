@@ -1,6 +1,21 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { images } from "../../common/image";
+import MasonryGallery from "../../components/MasonryGallery";
+const imagesPrice = [
+  images.mot,
+  images.hai,
+  images.ba,
+  images.bon,
+  images.nam,
+  images.sau,
+  images.bay,
+  images.tam,
+  images.chin,
+  images.muoi,
+  images.muoimot,
+  images.muoihai,
+];
 
 const PricingSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -11,7 +26,18 @@ const PricingSection = () => {
       gsap.fromTo(
         ".pricing-card",
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out" }
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%", 
+            toggleActions: "play none none none",
+          },
+        }
       );
 
       // Hover animations
@@ -64,7 +90,7 @@ const PricingSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 px-6 bg-gray-100">
+    <section ref={sectionRef} className="py-20 bg-gray-100">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-center gap-[3rem] gap-y-8">
           {pricingPlans.map((plan, index) => (
@@ -85,8 +111,9 @@ const PricingSection = () => {
               <div className=" relative z-10 h-full flex flex-col justify-center md:justify-around p-8 text-white">
                 {/* Price */}
                 <div className="pb-[10rem] md:pb-0 text-center">
-                  <h2 className="text-[15rem] md:text-[5rem] font-bold italic "
-                  style={{ fontFamily: "Harley Style" }}
+                  <h2
+                    className="text-[15rem] md:text-[5rem] font-bold "
+                    style={{ fontFamily: "Harley Style" }}
                   >
                     {plan.price}
                   </h2>
@@ -113,6 +140,7 @@ const PricingSection = () => {
           ))}
         </div>
       </div>
+      <MasonryGallery images={imagesPrice} />
     </section>
   );
 };
